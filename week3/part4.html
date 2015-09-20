@@ -1,11 +1,98 @@
+<!DOCTYPE html>
 <html>
 
     <head>
-    
+        <style>
+            
+            img {
+                position: absolute;
+            }
+            
+            #leftSide, #rightSide {
+                position: absolute;
+                width:500px;
+                height:500px;
+            }
+
+            #rightSide {
+                left: 500px;
+                border-left: 1px solid black;
+            }
+        </style> 
     </head>
 
-    <body>
-    
+    <body onload="startGame()">
+        
+        <h1>Matching Game</h1>
+        <p>Click on the extra smiling face on the left.</p>
+        <div id="leftSide">
+        </div>
+        <div id="rightSide">
+        </div>
+
+        <script type="text/javascript">
+        
+            var numberOfFaces = 5;
+            var theLeftSide;
+            var theRightSide;
+            var theBody;            
+            var face;
+            
+            function startGame() {
+                theLeftSide = document.getElementById('leftSide'); 
+                theRightSide = document.getElementById('rightSide'); 
+                theBody = document.body;
+                theBody.onclick = function gameOver() {
+                    alert('Game Over!');
+                    theBody.onclick = null;
+                    theLeftSide.lastChild.onclick = null;
+                }
+                
+                face = new Image(); 
+                face.src = "http://home.cse.ust.hk/~rossiter/mooc/matching_game/smile.png";
+                face.onload = function () {
+                    generateFaces();
+                }
+            }
+            
+            function generateFaces() {
+                // Clear out the child nodes 
+                // Alternative: theLeftSide.innerHTML = ''; - but we didn't learn that!
+                while (theLeftSide.firstChild) {
+                    theLeftSide.removeChild(theLeftSide.firstChild);
+                }
+
+                while (theRightSide.firstChild) {
+                    theRightSide.removeChild(theRightSide.firstChild);
+                }
+
+                // Generate the faces on the left
+                for(var i=0; i < numberOfFaces; i++) {
+                    console.log(i);
+                    var top = Math.floor(Math.random() * (theLeftSide.clientHeight - face.height));
+                    var left = Math.floor(Math.random() * (theLeftSide.clientWidth - face.width));
+                    var image = document.createElement('img');
+                    image.src= face.src;
+                    image.style.left = left + 'px';
+                    image.style.top = top + 'px';
+                    theLeftSide.appendChild(image);
+                }
+
+                // clone the left side
+                var clone = theLeftSide.cloneNode(true);
+                clone.removeChild(clone.childNodes[clone.childNodes.length -1]);
+                theRightSide.appendChild(clone);
+                
+                // wire up click event
+                theLeftSide.lastChild.onclick = nextLevel;
+            }
+            
+            function nextLevel(event) {
+                event.stopPropagation();
+                numberOfFaces += 5;
+                generateFaces();
+            }
+        </script>
     </body>    
     
 </html>
