@@ -34,8 +34,7 @@
         
             var numberOfFaces = 5;
             var theLeftSide;
-            var face;
-            
+
             function startGame() {
                 console.log('started');
 
@@ -47,11 +46,10 @@
             
             function generateFaces() {
                 for(var i=0; i < numberOfFaces; i++) {
-                    console.log(i);
                     var top = Math.floor(Math.random() * (theLeftSide.clientHeight - face.height));
                     var left = Math.floor(Math.random() * (theLeftSide.clientWidth - face.width));
                     var image = document.createElement('img');
-                    image.src= face.src;
+                    image.src= "https://home.cse.ust.hk/~rossiter/mooc/matching_game/smile.png";
                     image.style.left = left + 'px';
                     image.style.top = top + 'px';
                     theLeftSide.appendChild(image);
