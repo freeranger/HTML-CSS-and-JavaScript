@@ -36,7 +36,6 @@
             var theLeftSide;
             var theRightSide;
             var theBody;            
-            var face;
             
             function startGame() {
                 theLeftSide = document.getElementById('leftSide'); 
@@ -47,12 +46,7 @@
                     theBody.onclick = null;
                     theLeftSide.lastChild.onclick = null;
                 }
-                
-                face = new Image(); 
-                face.src = "https://home.cse.ust.hk/~rossiter/mooc/matching_game/smile.png";
-                face.onload = function () {
-                    generateFaces();
-                }
+                generateFaces();
             }
             
             function generateFaces() {
@@ -62,16 +56,22 @@
                     theLeftSide.removeChild(theLeftSide.firstChild);
                 }
 
+                // Right side should only have one node (clone of the left)
+                // But clear out all children just to be sure.
                 while (theRightSide.firstChild) {
                     theRightSide.removeChild(theRightSide.firstChild);
                 }
 
+                var imageSize = 100;
+                var maxHeight = theLeftSide.clientHeight - imageSize;
+                var maxWidth = theLeftSide.clientWidth - imageSize;
+                
                 // Generate the faces on the left
                 for(var i=0; i < numberOfFaces; i++) {
-                    var top = Math.floor(Math.random() * (theLeftSide.clientHeight - face.height));
-                    var left = Math.floor(Math.random() * (theLeftSide.clientWidth - face.width));
+                    var top = Math.floor(Math.random() * maxHeight);
+                    var left = Math.floor(Math.random() * maxWidth);
                     var image = document.createElement('img');
-                    image.src= face.src;
+                    image.src= "https://home.cse.ust.hk/~rossiter/mooc/matching_game/smile.png";
                     image.style.left = left + 'px';
                     image.style.top = top + 'px';
                     theLeftSide.appendChild(image);
