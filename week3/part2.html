@@ -34,30 +34,30 @@
         
             var numberOfFaces = 5;
             var theLeftSide;
-
+            var face;
+            
             function startGame() {
                 console.log('started');
 
-                theLeftSide = document.getElementById('leftSide'); 
-                face = new Image(); 
-                face.src = "https://home.cse.ust.hk/~rossiter/mooc/matching_game/smile.png";
-                face.onload = generateFaces;
+                theLeftSide = document.getElementById('leftSide');
+                generateFaces(); 
             }
             
             function generateFaces() {
+                var imageSize = 100;
+                var maxHeight = theLeftSide.clientHeight - imageSize;
+                var maxWidth = theLeftSide.clientWidth - imageSize;
+                
                 for(var i=0; i < numberOfFaces; i++) {
-                    var top = Math.floor(Math.random() * (theLeftSide.clientHeight - face.height));
-                    var left = Math.floor(Math.random() * (theLeftSide.clientWidth - face.width));
+                    console.log(i);
+                    var top = Math.floor(Math.random() * maxHeight);
+                    var left = Math.floor(Math.random() * maxWidth);
                     var image = document.createElement('img');
                     image.src= "https://home.cse.ust.hk/~rossiter/mooc/matching_game/smile.png";
                     image.style.left = left + 'px';
                     image.style.top = top + 'px';
                     theLeftSide.appendChild(image);
                 }
-            }
-            
-            function cloneNode(removeLastChild) {
-                
             }
         </script>
     </body>    
