@@ -87,7 +87,12 @@
             }
             
             function nextLevel(event) {
-                event.stopPropagation();
+                // Not strictly necessary in a modern browser, but check event exists
+                // and has a stopPropagation method before you try to invoke it
+                // (Was running IE in compatability mode and caused an error without this check!)
+                if (event && event.stopPropagation) {
+                    event.stopPropagation();
+                }
                 numberOfFaces += 5;
                 generateFaces();
             }
